@@ -10,7 +10,7 @@ import User from './components/modules/user';
 function App() {
   return (
     <div className="App">
-      <div className="text-center p-4">
+      <div className="max-w-4xl mx-auto text-gray-600 text-center p-4">
         <Announcement />
         <Header />
         
@@ -18,7 +18,7 @@ function App() {
       <div className="text-center">
         <User name={"Martha"} />
       </div>
-      <div className="max-w-md mx-auto bg-white">
+      <div className="max-w-lg mx-auto bg-white">
         <Conversation  agent={"Martha"}/>
 
       </div>
