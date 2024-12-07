@@ -2,6 +2,10 @@
   text-align: left;
 }
 
+.agent {
+  min-width: 30px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -34,6 +38,10 @@
 
 .animate-ping {
   animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  /* animation: ping 2s 1s linear infinite; */
+  position: absolute;
+  background-color: green;
+  width: 15px;
 }
 
 .p-3 {
@@ -76,15 +84,15 @@
 @keyframes mercuryTypingAnimation {
   0% {
     transform: translateY(0px);
-    background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+    background-color: rgba(107, 114, 128, 0.7);
   }
   28% {
     transform: translateY(-7px);
-    background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+    background-color: rgba(107, 114, 128, 0.4);
   }
   44% {
     transform: translateY(0px);
-    background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+    background-color: rgba(107, 114, 128, 0.2);
   }
 }
 

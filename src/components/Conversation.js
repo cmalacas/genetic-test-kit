@@ -4,7 +4,70 @@ import { agentImg, csr, profile } from '../assets/images';
 
 import { notification } from '../assets/sound';
 
+import Question1 from './modules/Question1';
+import Question2 from './modules/Question2';
+import Question3 from './modules/Question3';
+import Question4 from './modules/Question4';
+class Load extends Component {
 
+  constructor( props ) {
+
+    super( props);
+
+    this.state = {
+      show: 1
+    }
+
+    this.play = this.play.bind(this);
+    
+  }
+
+  play() {
+
+    new Audio( notification ).play();
+
+  }
+
+  componentDidMount() {
+
+   setTimeout(() => { this.setState( { show: 2 } )}, this.props.index * this.props.delay) ;    
+
+  }
+
+
+
+  render() {
+
+    return (
+
+      <div>
+
+      { this.state.show === 1 ?
+
+          <div className="chat-bubble p-4 bg-gray-200 rounded-md mt-2 ml-3">
+            <div className="typing p-4  flex">
+              <div className="dot bg-gray-500 h-[10px] w-[10px] rounded-full ml-0"></div>
+              <div className="dot bg-gray-500 h-[10px] w-[10px] rounded-full ml-4"></div>
+              <div className="dot bg-gray-500 h-[10px] w-[10px] rounded-full ml-4 mr-4"></div>
+            </div>
+          </div>
+
+      : this.state.show === 2 ?
+      
+        <>
+          { this.props.chat }
+          { this.play }
+         
+        </> 
+
+        : '' }
+      
+
+      </div>
+
+    )
+  }
+}
 
 class  Conversation  extends Component {
 
@@ -17,16 +80,24 @@ class  Conversation  extends Component {
       q1: '',
       q2: '',
       q3: '',
-      q4: ''
+      q4: '',
+
+      messages: ['Hi 👋'],
 
     }
 
     this.setAnswer1 = this.setAnswer1.bind(this);
     this.setAnswer2 = this.setAnswer2.bind(this);
     this.setAnswer3 = this.setAnswer3.bind(this);
-    this.setAnswer4 = this.setAnswer4.bind(this);
- 
+    this.setAnswer4 = this.setAnswer4.bind(this);    
+
   }
+
+
+
+  
+
+  
 
   setAnswer4( answer ) {
 
@@ -52,152 +123,26 @@ class  Conversation  extends Component {
 
   }
 
-  render() {
-
-    const agent = this.props.agent;
   
+
+
+  render() {   
+
     return (
       <div>
 
-        <div className="flex w-5/6">
+        <div>
 
-            <div>
-              
-            </div>
+            <Question1 agent={ this.props.agent } />
+            
 
-            <audio src={ notification } />
+          
 
-            <img className="w-8 h8 rounded-full agent-hidden" src={ csr } alt="Avatar" />
-        
-            {/* <Load 
-              chat={<p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Hi 👋</p>} 
-    /> */}
+          
 
         </div>
 
-        <div className="flex">
 
-          <img className="w-8 h8 rounded-full agent-hidden" src={ csr } alt="Avatar" />
-
-          <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">I'm { agent } from DNA Life.</p>
-
-        </div>
-
-        <div className="flex flex-start items-end w-5/6">
-
-          { this.state.q1 === '' ?
-
-              <img className="w-8 h8 rounded-full agent-hidden" src={ csr } alt="Avatar" />     
-
-              : 
-
-              <img className="w-8 h-8 rounded-full" src={ agentImg } alt="Avatar" />
-
-          }
-
-          <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Want to find out if you qualify for a No Cost DNA Genetic Test Kit? Tap Yes!  😊 </p>
-
-        </div>
-
-        { this.state.q1 === '' ?
-
-        <div className="flex items-end">
-
-          <img className="w-8 h-8 rounded-full" src={ agentImg } alt="Avatar" />
-
-          <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-            <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={ this.setAnswer1 }>Yes</button>
-          </p>
-
-        </div>
-
-        : '' }
-
-        { this.state.q1 === 'Yes' ?
-
-          <div className="flex items-start justify-end mt-2 ">
-
-            <div className="ml-3 bg-blue-500 text-white p-3 rounded-lg shadow-sm w-fit">{ this.state.q1}</div>
-
-            <img className="w-8 h-8 rounded-full ml-3" src={ profile } alt="profile" />
-
-          </div>
-      
-        : ''}
-
-        {
-          this.state.q1 === 'Yes' ?
-
-            <div>
-
-              <div className="flex">
-
-                <img className="w-8 h8 rounded-full agent-hidden" src={ csr } alt="Avatar" />
-
-                <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Okay, let me ask you a couple questions.</p>
-
-              </div>
-
-              <div className="flex items-end">
-
-                {
-                  this.state.q2 === '' ?
-
-                  <img className="w-8 h8 rounded-full agent-hidden" src={ csr } alt="Avatar" />
-
-                : 
-
-                  <img className="w-8 h-8 rounded-full" src={ agentImg } alt="Avatar" />
-
-                }
-
-                <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">What is your age range?</p>
-
-              </div>
-
-              { this.state.q2 === '' ?
-
-                <div className="flex items-end">
-
-                    <img className="w-8 h-8 rounded-full" src={ agentImg } alt="Avatar" />
-
-                    <div>                    
-
-                        <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                          <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer2('64-70')}>64-70</button>
-                        </p>
-
-                        <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                          <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer2('71-84')}>71-84</button>
-                        </p>
-
-                        <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                          <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer2('85-100')}>85-100</button>
-                        </p>
-
-                    </div>
-
-                  </div>
-
-                  : 
-
-                  <div className="flex items-start justify-end mt-2">
-                  
-                    <div className="ml-3 bg-blue-500 text-white p-3 rounded-lg shadow-sm">
-                      { this.state.q2 }
-                    </div>
-
-                    <img className="w-8 h-8 rounded-full ml-3" src={ profile } alt="profile" />
-
-                  </div>
-                  
-                  }
-
-            </div>
-
-            : ''
-
-        }
 
         { 
           this.state.q2 === '64-70' || this.state.q2 === '71-84' || this.state.q2 === '85-100' ?
@@ -208,7 +153,10 @@ class  Conversation  extends Component {
 
                 <img className="w-8 h8 rounded-full agent-hidden" src={ csr } alt="Avatar" />
 
-                <p className="ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Are you receiving Medicare?</p>
+                <Load 
+                  chat={<p className="ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Are you receiving Medicare?</p> }
+
+                  delay={ 3000 } />
 
             </div>
 
@@ -217,23 +165,9 @@ class  Conversation  extends Component {
 
                 <div className="flex items-end">
 
-                  <img className="w-8 h8 rounded-full" src={ agentImg } alt="Avatar" />
+                  <img className="w-8 h8 rounded-full" src={ agentImg } alt="Avatar" />                 
 
-                  <div>
 
-                    <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                      <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer3('Yes')}>Yes</button>
-                    </p>
-
-                    <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                      <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer3('No')}>No</button>
-                    </p>
-
-                    <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                      <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer3('Unsure')}>Unsure</button>
-                    </p>
-
-                  </div>
 
                 </div>
 
@@ -273,7 +207,10 @@ class  Conversation  extends Component {
 
                 }
 
-                <p className="ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">In addition to your medicare, do you also have a Humana, Cigna or Aetna Plan ?</p>
+                <Load 
+                  chat={<p className="ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">In addition to your medicare, do you also have a Humana, Cigna or Aetna Plan ?</p>} 
+                  delay={ 3000 }
+                />
 
               </div>
 
@@ -283,25 +220,35 @@ class  Conversation  extends Component {
 
                   <img className="w-8 h8 rounded-full" src={ agentImg } alt="Avatar" />
 
-                  <div>
+                  <Load 
 
-                    <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                      <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('No I do not have Plan')}>No I do not have Plan</button>
-                    </p>
+                    chat={
 
-                    <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                      <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('Yes I have Cigna Plan')}>Yes I have Cigna Plan</button>
-                    </p>
+                        <div>
 
-                    <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                      <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('Yes I have Aetna Plan')}>Yes I have Aetna Plan</button>
-                    </p>
+                          <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
+                            <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('No I do not have Plan')}>No I do not have Plan</button>
+                          </p>
 
-                    <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
-                      <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('Yes I have Humana Plan')}>Yes I have Humana Plan</button>
-                    </p>
+                          <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
+                            <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('Yes I have Cigna Plan')}>Yes I have Cigna Plan</button>
+                          </p>
 
-                  </div>
+                          <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
+                            <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('Yes I have Aetna Plan')}>Yes I have Aetna Plan</button>
+                          </p>
+
+                          <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
+                            <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => this.setAnswer4('Yes I have Humana Plan')}>Yes I have Humana Plan</button>
+                          </p>
+
+                        </div>
+
+                    } 
+
+                    delay={ 3000 }
+                    
+                  />
 
                 </div>
 
@@ -322,31 +269,40 @@ class  Conversation  extends Component {
 
               : this.state.q3 === 'No' ?
 
-              <div>
+              <Load
 
-                <div className="flex items-end w-56">
+                chat={
+                    <div>
 
-                  <img className="w-8 h8 rounded-full" src={ agentImg } alt="Avatar" />
+                      <div className="flex items-end w-56">
 
-                  <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm">🙇‍♀️ Sorry, it seems like you don't qualify for this offer 😕</p>
+                        <img className="w-8 h8 rounded-full" src={ agentImg } alt="Avatar" />
 
-                </div>
+                        <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm">🙇‍♀️ Sorry, it seems like you don't qualify for this offer 😕</p> 
+                          
+                        
 
-                <div className="pt-2">
+                      </div>
 
-                  <div className="flex py-5 items-center">
+                      <div className="pt-2">
 
-                    <div className="flex-grow border-t border-gray-200"></div>
+                        <div className="flex py-5 items-center">
 
-                    <span className="flex-shrink mx-4 text-gray-300 text-xs">Chat Closed</span>
+                          <div className="flex-grow border-t border-gray-200"></div>
 
-                    <div className="flex-grow border-t border-gray-200"></div>
+                          <span className="flex-shrink mx-4 text-gray-300 text-xs">Chat Closed</span>
 
-                  </div>
+                          <div className="flex-grow border-t border-gray-200"></div>
 
-                </div>
+                        </div>
 
-              </div>
+                      </div>
+
+                    </div>
+
+                }
+
+                delay={ 3000 } />
 
             : '' }
         {
@@ -359,15 +315,17 @@ class  Conversation  extends Component {
 
                 <div>
 
-                  <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">🎉 Congratulations!  🎁 </p>
+                  <Load chat={<p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">🎉 Congratulations!  🎁 </p> } delay={ 2000 } />
 
-                  <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">You're pre-qualified to receive a No Cost DNA Genetic Test Kit! Confirm your shipping info over the phone to receive your test.</p>
+                  <Load chat={ <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">You're pre-qualified to receive a No Cost DNA Genetic Test Kit! Confirm your shipping info over the phone to receive your test.</p> } delay={ 2500 } />
 
-                  <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Tap the button below to CALL NOW to finalize your order. It only takes 2 minutes.</p>
+                  <Load chat={ <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Tap the button below to CALL NOW to finalize your order. It only takes 2 minutes.</p> } delay={ 3000 } />
 
-                  <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
+                  <Load chat={ <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
                   
                   <button className="text-white font-bold bg-blue-500 rounded-md py-3 px-12">+1 888-965-0711</button></p>
+
+                  } delay={ 3500 } />
 
                 </div>
 
