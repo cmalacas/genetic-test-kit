@@ -4,6 +4,8 @@ import { agentImg, csr, profile } from '../assets/images';
 
 import { notification } from '../assets/sound';
 
+
+
 class  Conversation  extends Component {
 
   constructor(props) {
@@ -67,7 +69,9 @@ class  Conversation  extends Component {
 
             <img className="w-8 h8 rounded-full agent-hidden" src={ csr } alt="Avatar" />
         
-            <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Hi 👋</p>
+            {/* <Load 
+              chat={<p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">Hi 👋</p>} 
+    /> */}
 
         </div>
 
@@ -414,6 +418,59 @@ class  Conversation  extends Component {
 
 }
 
+
+class Load extends Component {
+
+  constructor( props ) {
+
+    super( props );
+
+    this.state = {
+
+      loading: 1
+
+    }
+
+  }
+
+  render() {
+
+    const chat = this.props.chat;
+
+    return (
+
+      <div>
+
+        { this.state.loading === 1 ?
+
+            <div className="chat-bubble">
+            <div className="typing">
+              <div className="dot bg-gray-500"></div>
+              <div className="dot bg-gray-500"></div>
+              <div className="dot bg-gray-500"></div>
+            </div>
+            </div>
+
+        
+        
+        : this.chat
+      
+        }
+
+        {/* setTimeout({
+
+          this.setState({ loading: 0 })
+
+        }, 3000); */}
+
+      </div>
+
+    )
+
+  }
+
+
+}
 
 
 export default Conversation
