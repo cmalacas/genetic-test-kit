@@ -9,7 +9,7 @@ function Question3({questions}) {
 
         questions.map(( question, index ) => {
 
-          return <LoadQuestion question={ question } index={ index + 1 } />
+          return <LoadQuestion key={ index } question={ question } index={ index + 1 } />
 
         })
 

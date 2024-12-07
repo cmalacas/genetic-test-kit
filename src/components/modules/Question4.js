@@ -8,9 +8,7 @@ const Question4 = ({questions}) => {
       {
         questions.map((question, index) => {
 
-          console.log('question', question);
-
-          return <LoadQuestion question={ question } index={ index } />
+          return <LoadQuestion key={ index } question={ question } index={ index } />
 
         })
       }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react'
+import React, {useState, useEffect, useMemo, useRef} from 'react'
 import { agentImg, profile } from '../../assets/images'
 import { notification } from '../../assets/sound';
 import Question2 from './Question2';
@@ -17,13 +17,13 @@ const  Question1 = ({agent}) => {
   const _questions = [
       {
         text: 'Hi 👋', 
-        delay: 1000,
-        wait: 1000
+        delay: 100,
+        wait: 100
       },
       {
         text: `I'm ${ agent } from DNA Life.`,
-        delay: 1000,
-        wait: 2000,
+        delay: 100,
+        wait: 200,
       }, 
       {
         text: 'Want to find out if you qualify for a No Cost DNA Genetic Test Kit? Tap Yes!  😊 ',
@@ -90,30 +90,21 @@ const  Question1 = ({agent}) => {
 
   const _questions4 = [
     {
-      text:'In addition to your medicare, do you also have a Humana, Cigna or Aetna Plan ?', 
+      text:'In addition to your medicare, do you also have a United Healthcare, Humana, Cigna, Aetna or Kaiser plan ?', 
       delay: 1000,
       wait: 2000,
     },
     {
-      text: <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => setAnswer4('No I do not have Plan')}>No I do not have Plan</button>, 
+      text: <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-6" onClick={() => setAnswer4('Yes I do')}>Yes I do</button>, 
       delay: 1000,
       wait: 4000
     },
     {
-      text: <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => setAnswer4('Yes I have Cigna Plan')}>Yes I have Cigna Plan</button>, 
+      text: <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-6" onClick={() => setAnswer4('No I do not')}>No I do not</button>, 
       delay: 1000,
       wait: 6000
-    },
-    {
-      text: <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => setAnswer4('Yes I have Aetna Plan')}>Yes I have Aetna Plan</button>, 
-      delay: 1000,
-      wait: 8000
-    },
-    {
-      text: <button className="text-white font-bold bg-blue-500 rounded-full py-3 px-12" onClick={() => setAnswer4('Yes I have Humana Plan')}>Yes I have Humana Plan</button>,
-      delay: 1000,
-      wait: 10000
-    }
+    },    
+    
   ];
 
   const questions5 = [
@@ -133,7 +124,7 @@ const  Question1 = ({agent}) => {
       wait: 5000
     },
     {
-      text: <a href="tel:+18889650711" className="text-white font-bold bg-blue-500 rounded-md py-3 px-12">+1 888-965-0711</a>,
+      text: <a href="tel:+18889650711" className="text-white font-bold bg-blue-500 rounded-md py-3 px-4">+1 888-965-0711</a>,
       delay: 2000,
       wait: 7000
     } 
@@ -199,7 +190,7 @@ const  Question1 = ({agent}) => {
 
     if (answer3 === 'Yes' || answer3 === 'No' || answer3 === 'Unsure') {
 
-      setQuestions3([{ text: 'Are you receiving Medicare?', delay: 0 }]);
+      setQuestions3([{ text: 'Are you receiving Medicare?', delay: 0 }]);      
     
     }
 
@@ -213,9 +204,9 @@ const  Question1 = ({agent}) => {
 
   useEffect(() => {
 
-    if (answer4 === 'No I do not have Plan' || answer4 === 'Yes I have Cigna Plan' || answer4 === 'Yes I have Aetna Plan' || answer4 === 'Yes I have Humana Plan') {
+    if (answer4 === 'No I do not') {
 
-      setQuestions4([{ text: 'In addition to your medicare, do you also have a Humana, Cigna or Aetna Plan ?', delay: 0}]);
+      setQuestions4([{ text: 'In addition to your medicare, do you also have a United Healthcare, Humana, Cigna, Aetna or Kaiser plan ?', delay: 0}]);
 
     }    
 
@@ -224,7 +215,7 @@ const  Question1 = ({agent}) => {
   return (
     <div>
       <div className="flex">
-        <div className="flex items-end">
+        <div className="flex items-end agent">
 
           {
 
@@ -366,7 +357,7 @@ const  Question1 = ({agent}) => {
 
             {
 
-              (answer4 === 'No I do not have Plan' || answer4 === 'Yes I have Cigna Plan' || answer4 === 'Yes I have Aetna Plan' || answer4 === 'Yes I have Aetna Plan') ? 
+              (answer4 === 'Yes I do' || answer4 === 'No I do not') ? 
 
                 <div className="mt-2 flex items-start justify-end">                
                   <div className="ml-3 bg-blue-500 text-white p-3 rounded-lg shadow-sm">
@@ -382,7 +373,7 @@ const  Question1 = ({agent}) => {
             }
 
             {
-              (answer4 === 'No I do not have Plan') ?
+              (answer4 === 'No I do not') ?
 
                 <Question5 
                   questions={ questions5 }
@@ -390,7 +381,7 @@ const  Question1 = ({agent}) => {
 
               : 
 
-              (answer4 === 'Yes I have Cigna Plan' || answer4 === 'Yes I have Aetna Plan' || answer4 === 'Yes I have Aetna Plan') ?
+              (answer4 === 'Yes I do') ?
 
                 <div>
 
@@ -432,9 +423,29 @@ export const LoadQuestion = ({question, play, audio}) => {
 
   const [loading, setLoading] = useState(0);
 
+  const messageRef = useRef(null);
+
   useEffect(() => {
 
-    setTimeout(() => { setLoading(1) }, question.wait);
+    setTimeout(() => { 
+      setLoading(1);
+
+      messageRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      }) 
+      
+      // const element = document.getElementById('App');
+    
+      // element.scrollTop = element.scrollHeight;
+
+    }, question.wait);
+
+    
+
+    // console.log('scroll', element.scrollHeight)
+
+    // element.scrollIntoView({ behavior: 'smoot'});
 
   })
 
@@ -449,7 +460,11 @@ export const LoadQuestion = ({question, play, audio}) => {
 
       : 
 
-      <Loaded question={ question } play={ play } audio={ audio } />
+      <div ref={ messageRef }>
+
+        <Loaded  question={ question } play={ play } audio={ audio } />
+
+      </div>
 
     }
 
@@ -465,7 +480,8 @@ const Loaded = ({question, play, audio}) => {
 
   useEffect(() => {
 
-    setTimeout(() => { setLoaded(1);  }, question.delay);        
+    setTimeout(() => { setLoaded(1);  }, question.delay);      
+    
 
   }, [setLoaded, question]);
 

@@ -7,7 +7,7 @@ function Question5({questions}) {
       {
         questions.map((question, index) => {
 
-          return <LoadQuestion question={question} index={ index } />
+          return <LoadQuestion key={ index } question={question} index={ index } />
 
         })
       }

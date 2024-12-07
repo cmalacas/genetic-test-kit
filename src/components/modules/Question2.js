@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 import { LoadQuestion } from './Question1';
-const Question2 = ({questions}) =>{
+const Question2 = ({questions}) =>{  
 
 
   return (
