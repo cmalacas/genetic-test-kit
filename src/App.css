@@ -49,23 +49,25 @@
 }
 
 .chat-bubble {
-  width: 120px;
-  max-width: 120px;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));;
+  padding:16px 28px;
+  border-radius: 20px;
+  display:inline-block;
 }
-
 .typing {
-  height: 20px;
-  display: flex;
   align-items: center;
-  max-width: 100px;
-  width: 100px;
+  display: flex;
+  height: 17px;
 }
-
 .typing .dot {
   animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+  border-radius: 50%;
+  height: 7px;
+  margin-right: 4px;
   vertical-align: middle;
+  width: 7px;
+  display: inline-block;
 }
-
 .typing .dot:nth-child(1) {
   animation-delay: 200ms;
 }

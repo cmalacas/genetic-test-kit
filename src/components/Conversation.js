@@ -372,5 +372,58 @@ class  Conversation  extends Component {
 }
 
 
+class Load extends Component {
+
+  constructor( props ) {
+
+    super( props );
+
+    this.state = {
+
+      loading: 1
+
+    }
+
+  }
+
+  render() {
+
+    const chat = this.props.chat;
+
+    return (
+
+      <div>
+
+        { this.state.loading === 1 ?
+
+            <div className="chat-bubble">
+            <div className="typing">
+              <div className="dot bg-gray-500"></div>
+              <div className="dot bg-gray-500"></div>
+              <div className="dot bg-gray-500"></div>
+            </div>
+            </div>
+
+        
+        
+        : this.chat
+      
+        }
+
+        {/* setTimeout({
+
+          this.setState({ loading: 0 })
+
+        }, 3000); */}
+
+      </div>
+
+    )
+
+  }
+
+
+}
+
 
 export default Conversation
