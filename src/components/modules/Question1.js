@@ -21,7 +21,7 @@ const  Question1 = ({agent}) => {
         wait: 100
       },
       {
-        text: `I'm ${ agent } from DNA Life.`,
+        text: `I'm ${ agent } from Orla Health.`,
         delay: 100,
         wait: 200,
       }, 
@@ -130,6 +130,39 @@ const  Question1 = ({agent}) => {
     } 
   ];
 
+  const congratulation2 = [
+    {
+      text: '🎉 Congratulations! 🎁',
+      wait: 1000,
+      delay: 1000
+    },
+    {
+      text: "You're prequalified to receive a No-Cost DNA Genetic Test Kit! Confirm your shipping info over the phone to receive your test kit.",
+      wait: 2000,
+      delay: 1000
+    },
+    {
+      text: 'Tap the button below to CALL NOW and finalize your order. It only takes 2 minutes!',
+      wait: 3000,
+      delay: 1000
+    },
+    {
+      text: <a href="tel:18889650711" className="text-white font-bold bg-blue-500 rounded-lg py-3 px-2">+1 888-965-0711</a>,
+      wait: 4000,
+      delay: 1000
+    },
+    {
+      text: 'Or, schedule an appointment to speak with our representative at your earliest convenience.',
+      wait: 5000,
+      delay: 1000
+    },
+    {
+      text: <a rel="noreferrer" target="_blank" className="text-white font-bold bg-blue-500 rounded-full py-3 px-6"  href="https://api.leadconnectorhq.com/widget/booking/NcPaWSOyaeqj6ygIveEN">Click Here</a>,
+      wait: 5000,
+      delay: 1000
+    }
+  ]
+
   const sorry = [{ text: "🙇‍♀️ Sorry, it seems like you don't qualify for this offer 😕", delay: 0}];
 
   const [questions, setQuestions] = useState(_questions);
@@ -156,7 +189,7 @@ const  Question1 = ({agent}) => {
           delay: 0,
         },
         {
-          text: `I'm ${ agent } from DNA Life.`,
+          text: `I'm ${ agent } from Orla Health.`,
           delay: 1
         }, 
         {
@@ -204,7 +237,7 @@ const  Question1 = ({agent}) => {
 
   useEffect(() => {
 
-    if (answer4 === 'No I do not') {
+    if (answer4 === 'No I do not' || answer4 === 'Yes I do') {
 
       setQuestions4([{ text: 'In addition to your medicare, do you also have a United Healthcare, Humana, Cigna, Aetna or Kaiser plan ?', delay: 0}]);
 
@@ -264,6 +297,8 @@ const  Question1 = ({agent}) => {
                 <Question2 
                   questions={ questions2 }
                   setAnswer2={ setAnswer2 }
+                  play={ play }
+                  audio={ audio }
                 />
               
 
@@ -295,6 +330,8 @@ const  Question1 = ({agent}) => {
 
                 <Question3 
                   questions={ questions3 }
+                  play={ play }
+                  audio={ audio }
                 />
 
                : '' 
@@ -322,6 +359,8 @@ const  Question1 = ({agent}) => {
 
                 <Question4 
                   questions={ questions4 }
+                  play={ play }
+                  audio={ audio }
                 />
 
                 : 
@@ -376,7 +415,9 @@ const  Question1 = ({agent}) => {
               (answer4 === 'No I do not') ?
 
                 <Question5 
-                  questions={ questions5 }
+                  questions={ congratulation2 }
+                  play={ play }
+                  audio={ audio }
                 />
 
               : 
@@ -387,6 +428,8 @@ const  Question1 = ({agent}) => {
 
                   <Question5 
                     questions={ sorry }
+                    play={ play }
+                    audio={ audio }
                   />
 
                   <div className="pt-2">
@@ -480,18 +523,20 @@ const Loaded = ({question, play, audio}) => {
 
   useEffect(() => {
 
-    setTimeout(() => { setLoaded(1);  }, question.delay);      
+    setTimeout(() => { 
+
+      setLoaded(1);  
+
+      if (play) {
+        audio.play();
+      }
+
+    }, question.delay);      
     
 
-  }, [setLoaded, question]);
+  }, [setLoaded, question, play, audio]);
 
-  useEffect(() => {
-
-    if (play) {
-      audio.play();
-    }
-
-  })
+  
 
   return (
 
@@ -514,8 +559,7 @@ const Loaded = ({question, play, audio}) => {
         <div className="w-5/6">
           <p className="mt-2 ml-3 bg-gray-200 p-3 rounded-lg text-gray-800 shadown-sm w-fit">
             { question.text }          
-          </p>
-          <div>{ play }</div>
+          </p>          
         </div>
 
       }

@@ -134,11 +134,6 @@ class  Conversation  extends Component {
         <div>
 
             <Question1 agent={ this.props.agent } />
-            
-
-          
-
-          
 
         </div>
 

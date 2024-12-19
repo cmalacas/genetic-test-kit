@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 
 import { LoadQuestion } from './Question1';
-const Question2 = ({questions}) =>{  
+const Question2 = ({questions, play, audio}) =>{  
 
 
   return (
@@ -11,7 +11,7 @@ const Question2 = ({questions}) =>{
 
         questions.map(( question, index ) => {
 
-          return <LoadQuestion key={ index } question={ question } index={ index + 1 } />
+          return <LoadQuestion key={ index } question={ question } index={ index + 1 } play={ play } audio={ audio } />
 
         })
 
